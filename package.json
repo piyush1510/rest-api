@@ -4,7 +4,8 @@
   "description": "",
   "main": "app",
   "scripts": {
-    "test": "nodemon app"
+    "test": "nodemon app",
+    "start":"node app"
   },
   "author": "piyush verma",
   "license": "ISC",

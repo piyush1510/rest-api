@@ -1,6 +1,19 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+
+mongoose.connect(
+process.env.MONGO_URL
+, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+  useFindAndModify:true
+});
+const db = mongoose.connection;
+db.on("error", (err) => console.error(err));
+db.once("open", () => console.error("database connected"));
 
 const app = express();
 app.use(morgan('tiny'));
