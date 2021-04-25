@@ -9,7 +9,8 @@ process.env.MONGO_URL
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
-  useFindAndModify:true
+  useFindAndModify:true,
+  dbName:process.env.DB_NAME
 });
 const db = mongoose.connection;
 db.on("error", (err) => console.error(err));
