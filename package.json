@@ -1,0 +1,16 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app",
+  "scripts": {
+    "test": "nodemon app"
+  },
+  "author": "piyush verma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.5",
+    "morgan": "^1.10.0"
+  }
+}
