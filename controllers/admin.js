@@ -3,6 +3,7 @@ const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+// create post
 exports.postPost = async (req, res) => {
   try {
     const post = new Post({
@@ -15,6 +16,7 @@ exports.postPost = async (req, res) => {
     res.json({message: err.message});
   }
 };
+// post update
 exports.patchPost = async (req, res) => {
   try {
     const newPost = await Post.updateOne(
@@ -31,6 +33,7 @@ exports.patchPost = async (req, res) => {
     res.json({message: err.message});
   }
 };
+// post delete
 exports.deletePost = async (req, res) => {
   try {
     const post = await Post.deleteOne({_id: req.params.id});
@@ -39,6 +42,7 @@ exports.deletePost = async (req, res) => {
     res.json({message: err.message});
   }
 };
+// login
 exports.login = async (req, res) => {
   try {
     const admin = await Admin.findOne({email: req.body.email});
@@ -55,4 +59,19 @@ exports.login = async (req, res) => {
   } catch (err) {
     res.sendStatus(404);
   }
+};
+// auth
+exports.authenticate = (req, res, next) => {
+  console.log('authenticating');
+  // check if the token is valid or not
+  const authHeader = req.headers['authorization'];
+  if (authHeader == null) return res.sendStatus(401);
+  const token = authHeader.split(' ')[1];
+  if (token == null) return res.sendStatus(401);
+  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(404);
+    req.user = user;
+    console.log('here');
+    next();
+  });
 };
