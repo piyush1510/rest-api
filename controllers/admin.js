@@ -2,20 +2,24 @@ const Post = require('../models/Post');
 const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const cloudinary = require('../utils/cloudinary');
 
 // create post
-exports.postPost = async (req, res) => {
+exports.postPost =async (req, res) => {
   try {
-    const post = new Post({
+    const result = await cloudinary.uploader.upload(req.file.path);
+    let post = new Post({
       title: req.body.title,
-      content: req.body.content,
+      content:req.body.content,
+      image_url: result.secure_url,
+      cloudinary_id: result.public_id,
     });
-    const newPost = await post.save();
-    res.json(newPost);
+    await post.save();
+    res.json(post);
   } catch (err) {
-    res.json({message: err.message});
+    res.json({message:err.message})
   }
-};
+}
 // post update
 exports.patchPost = async (req, res) => {
   try {

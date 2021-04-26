@@ -9,6 +9,14 @@ const postSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    image_url:{
+        type:String,
+        required:true
+    },
+    cloudinary_id:{
+        type:String,
+        required:true
+    },
     createdDate:{
         type:Date,
         required:true,
